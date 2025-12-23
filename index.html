@@ -1,68 +1,281 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Media Library Info</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Media Library Info Hub</title>
+  <meta name="description" content="Central access point for information, services, and updates." />
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      text-align: center;
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a2e;
+      --card2:#101f38;
+      --text:#e6eefc;
+      --muted:#a9b7d1;
+      --line:rgba(255,255,255,.10);
+      --brand1:#1d4ed8;
+      --brand2:#06b6d4;
+      --good:#22c55e;
+      --warn:#f59e0b;
     }
-    header {
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #2563eb, #22d3ee);
-      color: #ffffff;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(6,182,212,.25), transparent 55%),
+                  radial-gradient(900px 600px at 100% 20%, rgba(29,78,216,.25), transparent 55%),
+                  var(--bg);
+      color:var(--text);
     }
-    section {
-      padding: 30px 20px;
-      max-width: 900px;
-      margin: auto;
+    a{color:inherit}
+    .wrap{max-width:1000px;margin:0 auto;padding:20px}
+    header{
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(29,78,216,.65), rgba(6,182,212,.55));
+      border-radius:18px;
+      padding:26px 18px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
     }
-    .box {
-      background: #111827;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-      border: 1px solid #1f2937;
+    header h1{margin:0;font-size:34px;letter-spacing:.2px}
+    header p{margin:10px 0 0;color:rgba(255,255,255,.90);font-size:16px}
+    .badge-row{
+      display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px
     }
-    footer {
-      padding: 20px;
-      font-size: 14px;
-      color: #9ca3af;
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.18);
+      color:rgba(255,255,255,.95);
     }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+    @media(min-width:800px){
+      .grid{grid-template-columns: 1fr 1fr;}
+      .grid3{grid-template-columns: 1fr 1fr 1fr;}
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-radius:18px;
+      padding:16px;
+    }
+    .card h2{margin:0 0 8px;font-size:20px}
+    .card p{margin:0;color:var(--muted);line-height:1.45}
+    .small{font-size:13px;color:var(--muted)}
+
+    .quick{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(29,78,216,.75), rgba(6,182,212,.55));
+      border:1px solid rgba(255,255,255,.22);
+    }
+    .btn.good{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.08)}
+    .btn.warn{border-color:rgba(245,158,11,.35); background:rgba(245,158,11,.08)}
+    .btn:active{transform: translateY(1px)}
+
+    .kv{
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap:10px;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid var(--line);
+    }
+    .kv div{padding:6px 0}
+    .kv .k{color:rgba(255,255,255,.80);font-weight:700}
+    .kv .v{color:var(--muted)}
+
+    .hero-img{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(29,78,216,.35), rgba(6,182,212,.20)),
+        url("REPLACE_IMAGE_URL_1") center/cover no-repeat;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-img .label{
+      position:absolute;
+      left:10px;bottom:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.40);
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+    }
+
+    .list{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    .li{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+    }
+    .li strong{font-size:14px}
+    .tag{font-size:12px;color:rgba(255,255,255,.90);padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.18)}
+    footer{margin:18px 0 10px;text-align:center;color:var(--muted);font-size:13px}
+    .note{
+      border-left:4px solid rgba(6,182,212,.7);
+      padding:10px 12px;
+      background: rgba(6,182,212,.08);
+      border-radius:12px;
+      margin-top:10px;
+      color:rgba(230,238,252,.92);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .pillbar{
+      display:flex;gap:8px;flex-wrap:wrap;margin-top:10px
+    }
+    .pill{
+      padding:6px 10px;border-radius:999px;border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size:12px;color:var(--muted)
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
   </style>
 </head>
+
 <body>
+  <div class="wrap">
 
-<header>
-  <h1>Media Library Info Hub</h1>
-  <p>Central access point for information, services, and updates</p>
-</header>
+    <header>
+      <h1>Media Library Info Hub</h1>
+      <p>Central access point for information, services, and updates</p>
+      <div class="badge-row">
+        <div class="badge">Vang Vieng • Laos</div>
+        <div class="badge">Fast • Simple • Editable</div>
+        <div class="badge">GitHub Pages</div>
+      </div>
+    </header>
 
-<section>
-  <div class="box">
-    <h2>About</h2>
-    <p>This site is built to be simple, fast, and editable without breaking.</p>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card">
+        <h2>Quick Actions</h2>
+        <p>Tap a button. Change the links later.</p>
+
+        <div class="quick" style="margin-top:12px;">
+          <a class="btn primary" href="tel:+856XXXXXXXX" aria-label="Call">📞 Call</a>
+          <a class="btn good" href="https://wa.me/856XXXXXXXX" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a class="btn" href="https://maps.google.com/?q=Vang+Vieng" target="_blank" rel="noopener">📍 Map</a>
+          <a class="btn warn" href="#updates">🟠 Updates</a>
+        </div>
+
+        <div class="kv">
+          <div class="k">Phone</div><div class="v mono">+856XXXXXXXX</div>
+          <div class="k">WhatsApp</div><div class="v mono">wa.me/856XXXXXXXX</div>
+          <div class="k">Location</div><div class="v">Vang Vieng, Laos</div>
+        </div>
+
+        <div class="note">
+          To change phone/WhatsApp later: replace <span class="mono">+856XXXXXXXX</span> in the code.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Featured Image (optional)</h2>
+        <p>If you don’t have an image yet, leave it — it will still look good.</p>
+
+        <div class="hero-img" title="Replace with your own image URL">
+          <div class="label">Replace Image URL in code</div>
+        </div>
+
+        <div class="note">
+          Replace <span class="mono">REPLACE_IMAGE_URL_1</span> with a real image link (jpg/png/webp).
+          Example: <span class="mono">https://your-site.com/photo.jpg</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid3">
+      <div class="card">
+        <h2>About</h2>
+        <p>This hub is designed to be simple, fast, and easy to update without breaking.</p>
+        <div class="pillbar">
+          <div class="pill">Info</div><div class="pill">Help</div><div class="pill">Services</div><div class="pill">Links</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Services</h2>
+        <p>Swap these anytime—pricing, images, and sections can change without redesign.</p>
+        <ul class="list">
+          <li class="li"><strong>Tour Help / Booking</strong><span class="tag">Tourism</span></li>
+          <li class="li"><strong>Directions / Transport</strong><span class="tag">Local</span></li>
+          <li class="li"><strong>Internet / Printing</strong><span class="tag">Shop</span></li>
+        </ul>
+      </div>
+
+      <div class="card" id="updates">
+        <h2>Updates</h2>
+        <p>Post quick notices here (today’s hours, warnings, events).</p>
+        <ul class="list">
+          <li class="li"><strong>Open today</strong><span class="tag">Status</span></li>
+          <li class="li"><strong>New flyer / QR ready</strong><span class="tag">Info</span></li>
+          <li class="li"><strong>Add photos next</strong><span class="tag">Next</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h2>Links</h2>
+      <p>Put your main links here. Replace the URLs later.</p>
+
+      <div class="quick" style="margin-top:12px;">
+        <a class="btn" href="https://example.com" target="_blank" rel="noopener">🔗 Main Website</a>
+        <a class="btn" href="https://example.com/menu" target="_blank" rel="noopener">🧾 Menu / Prices</a>
+        <a class="btn" href="https://example.com/gallery" target="_blank" rel="noopener">🖼️ Gallery</a>
+        <a class="btn" href="https://example.com/contact" target="_blank" rel="noopener">✉️ Contact</a>
+      </div>
+
+      <div class="note">
+        Replace <span class="mono">https://example.com</span> links with your real links.
+      </div>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Media Library • Built on GitHub Pages
+    </footer>
   </div>
 
-  <div class="box">
-    <h2>Services</h2>
-    <p>Content, pricing, images, and sections can be swapped anytime.</p>
-  </div>
-
-  <div class="box">
-    <h2>Updates</h2>
-    <p>This website runs directly from GitHub Pages.</p>
-  </div>
-</section>
-
-<footer>
-  © Media Library • Powered by GitHub Pages
-</footer>
-
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
